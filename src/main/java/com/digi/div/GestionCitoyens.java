@@ -60,7 +60,7 @@ public class GestionCitoyens {
         boolean check = false;
         Document citoyen = citoyens.find(and(eq("nom", nom), eq("role", role))).first();
         if (citoyen != null) {
-            long quantite = citoyen.getInteger("quantite");
+            int quantite = citoyen.getInteger("quantite");
             if (quantite >= nombreAttendu) {
                 check = true;
             }

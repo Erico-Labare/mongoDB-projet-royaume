@@ -4,11 +4,11 @@ import com.mongodb.client.MongoCollection;
 import org.bson.Document;
 
 
-public class GestionBatiment {
+public class GestionBatiments {
 
     private static MongoCollection<Document> batiments;
 
-    public GestionBatiment(MongoCollection<Document> batiments, MongoCollection<Document> ressources) {
+    public GestionBatiments(MongoCollection<Document> batiments) {
         this.batiments = batiments;
     }
 
@@ -22,23 +22,25 @@ public class GestionBatiment {
     public static void construire1NiveauBatiment(String type, int coutBois, int coutPierre, String fonction) {
         Document batiment = batiments.find(new Document("fonction", fonction)).first();
 
-//        System.out.println(ressourcesBois);
-//        System.out.println(ressourcesPierre);
-
-        if (GestionRessources.verifierRessources("Bois", coutBois) && GestionRessources.verifierRessources("Pierre",coutPierre)) {
-            GestionRessources.getRessources().updateOne(
-                    new Document("type", "Bois"),
-                    new Document("$inc", new Document("quantite", -coutBois))
-            );
-
-            GestionRessources.getRessources().updateOne(
-                    new Document("type", "Pierre"),
-                    new Document("$inc", new Document("quantite", -coutPierre))
-            );
-            ajouterBatiment(type, 1, fonction);
-            System.out.println("Bâtiment construit : " + type);
+        if (batiment != null) {
+            // Si le bâtiment existe, afficher un message
+            System.out.println("Le bâtiment de type " + type + " et de fonction " + fonction + " existe déjà.");
         } else {
-            System.out.println("Pas assez de ressources pour construire " + type);
+            if (GestionRessources.verifierRessources("Bois", coutBois) && GestionRessources.verifierRessources("Pierre", coutPierre)) {
+                GestionRessources.getRessources().updateOne(
+                        new Document("type", "Bois"),
+                        new Document("$inc", new Document("quantite", -coutBois))
+                );
+
+                GestionRessources.getRessources().updateOne(
+                        new Document("type", "Pierre"),
+                        new Document("$inc", new Document("quantite", -coutPierre))
+                );
+                ajouterBatiment(type, 1, fonction);
+                System.out.println("Bâtiment construit : " + type);
+            } else {
+                System.out.println("Pas assez de ressources pour construire " + type);
+            }
         }
     }
 
@@ -55,7 +57,6 @@ public class GestionBatiment {
 
         if (batiment != null) {
             int niveauActuel = batiment.getInteger("niveau", 0);
-
 
             int coutBois = coutBoisParNiveau * niveauAjouter;
             int coutPierre = coutPierreParNiveau * niveauAjouter;
@@ -99,6 +100,6 @@ public class GestionBatiment {
      *@param batiments batiments
      */
     public static void setBatiments(MongoCollection<Document> batiments) {
-        GestionBatiment.batiments = batiments;
+        GestionBatiments.batiments = batiments;
     }
 }
