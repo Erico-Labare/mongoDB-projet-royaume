@@ -9,7 +9,7 @@ public class Ressources {
         this.quantite = quantite;
     }
 
-    public void afficherDetails() {
+    public void afficherDetailsRessources() {
         System.out.println("Ressource: " + type + ", Quantité: " + quantite);
     }
 }

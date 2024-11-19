@@ -42,13 +42,13 @@ public class GestionRessources {
         System.out.println("Ressource supprimée : " +type);
     }
 
-    public static boolean verifierQantiteRessources(String type, int nombreAttendu) {
+    public static boolean verifierRessources(String type, int nombreAttendu) {
         boolean check = false;
 
         Document ressource = ressources.find(eq("type", type)).first();
 
         if (ressource != null) {
-            long quantite = ressource.getInteger("quantite");
+            int quantite = ressource.getInteger("quantite");
             if (quantite >= nombreAttendu) {
                 check = true;
             }
@@ -61,5 +61,12 @@ public class GestionRessources {
      */
     public static void setRessources(MongoCollection<Document> ressources) {
         GestionRessources.ressources = ressources;
+    }
+
+    /** Getter
+     *@return ressources
+     */
+    public static MongoCollection<Document> getRessources() {
+        return ressources;
     }
 }

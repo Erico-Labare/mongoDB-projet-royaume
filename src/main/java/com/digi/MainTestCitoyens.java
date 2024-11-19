@@ -15,15 +15,15 @@ public class MainTestCitoyens {
 
         GestionCitoyens.setCitoyens(db.getCollection("Citoyens"));
 
-        GestionCitoyens.ajouterCitoyens("Tester", "Test 1", 10);
+        GestionCitoyens.ajouterCitoyens("Tester", 10, "Test 1");
 
         GestionCitoyens.afficherCitoyens();
 
-        GestionCitoyens.mettreAJourQuantiteCitoyens("Tester", "Test 1", 20);
+        GestionCitoyens.mettreAJourQuantiteCitoyens("Tester", 20,"Test 1");
 
         GestionCitoyens.afficherCitoyens();
 
-        GestionCitoyens.mettreAJourRoleCitoyens("Tester", "Test 1", "Test 2");
+        GestionCitoyens.mettreAJourRoleCitoyens("Tester", "Test 1", "Test 2", 29);
 
         GestionCitoyens.afficherCitoyens();
 

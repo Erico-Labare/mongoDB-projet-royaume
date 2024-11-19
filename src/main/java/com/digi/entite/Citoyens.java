@@ -11,7 +11,7 @@ public class Citoyens {
         this.role = role;
     }
 
-    public void afficherDetails() {
+    public void afficherDetailsCitoyens() {
         System.out.println("Citoyen: " + nom + ", Quantité: " + quantite + ", Rôle: " + role);
     }
 }

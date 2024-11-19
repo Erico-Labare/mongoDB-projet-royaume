@@ -1,10 +1,11 @@
 package com.digi;
 
 import com.digi.div.ConnexionMongoDB;
+import com.digi.div.GestionBatiment;
 import com.digi.div.GestionRessources;
 import com.mongodb.client.MongoDatabase;
 
-public class MainTestRessources {
+public class MainTestBatiments {
     public static void main(String[] args) {
         ConnexionMongoDB connexion = new ConnexionMongoDB();
 
@@ -13,34 +14,31 @@ public class MainTestRessources {
 
         MongoDatabase db = connexion.getDB();
 
-        //Choisir la collection à éditer
+        GestionBatiment.setBatiments(db.getCollection("Batiments"));
         GestionRessources.setRessources(db.getCollection("Ressources"));
 
-        //Ajouter la ressource "Fer"
-        GestionRessources.ajouterRessources("Or", 500);
-
-        //Afficher toutes les collection
+        GestionBatiment.afficherBatiments();
         GestionRessources.afficherRessources();
 
-        //Changer la quantite de Bois
-        GestionRessources.mettreAJourQuantiteRessources("Or", 700);
+        GestionRessources.ajouterRessources("Bois", 10);
+        GestionRessources.ajouterRessources("Pierre", 20);
 
-        //RE-afficher toutes les collection
+        GestionBatiment.afficherBatiments();
         GestionRessources.afficherRessources();
 
+        GestionBatiment.construire1NiveauBatiment("Tour", 100,200, "Test 1");
 
-        if (GestionRessources.verifierRessources("Or", 700)){
-            System.out.println("Verif ok");
-        } else {
-            System.out.println("Verif pas ok");
-        }
-
+        GestionBatiment.afficherBatiments();
         GestionRessources.afficherRessources();
 
-        //Supprimer la ressource "Fer"
-        GestionRessources.supprimeRessources("Or");
+        GestionBatiment.ameliorerBatiment("Tour", 2,10,20,"Test 1");
 
-        //RE-RE-afficher toutes les collection
+        GestionBatiment.afficherBatiments();
+        GestionRessources.afficherRessources();
+
+        GestionBatiment.supprimeBatiment("Tour", "Test 1");
+
+        GestionBatiment.afficherBatiments();
         GestionRessources.afficherRessources();
 
         //Fermeture de la base de données
